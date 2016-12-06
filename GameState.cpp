@@ -11,6 +11,7 @@
 
 GameState::GameState(){
     std::cout << "Game State Constructor" << std::endl;
+    init();
     this->firstTile_ = -1;
     this->secondTile_ = -1;
 }
@@ -211,4 +212,16 @@ bool GameState::doPiecesMatch(int p1, int p2){
     bool bMatch = this->gameBoard_.at(p1).getB() == this->gameBoard_.at(p2).getB();
     return rMatch && gMatch && bMatch;
     //return this->gameBoard_.at(p1).getColor() == this->gameBoard_.at(p2).getColor();
+}
+
+void GameState::init() {
+    for(int x = 0; x < 8; x++) {
+        for(int y = 0; y < 8; y ++) {
+            GameState::gameBoard_.push_back(Piece(x,y));
+        }
+    }
+}
+
+std::vector<Piece> GameState::getPieces() {
+    return GameState::gameBoard_;
 }

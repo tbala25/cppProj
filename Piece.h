@@ -25,6 +25,7 @@ public:
     int getB();
     
     void setY(int a);
+    void setX(int a);
     
     void setColor() noexcept;
     
@@ -32,6 +33,7 @@ public:
     
     
 private:
+    //pos in grid, 0-8
     int x_;
     int y_;
     

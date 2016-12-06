@@ -92,7 +92,12 @@ public:
     
     void fall(int f);
     
+    void init();
+    
     Piece newPiece(int x, int y);
+    
+    std::vector<Piece> getPieces();
+    
 private:
     /* The 8x8 game board */
     std::vector< Piece > gameBoard_;

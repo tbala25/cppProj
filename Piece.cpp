@@ -66,3 +66,6 @@ tuple<int,int,int> Piece::getColor() {
 void Piece::setY(int a) {
     Piece::y_ = a;
 }
+void Piece::setX(int a) {
+    Piece::x_ = a;
+}
