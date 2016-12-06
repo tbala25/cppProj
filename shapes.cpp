@@ -20,6 +20,8 @@ SDL_Rect makeNewRect(int x, int y, int w, int h){
     return a;
 };
 
+//testing git commit
+
 
 
 int main (int argc, char** argv)
