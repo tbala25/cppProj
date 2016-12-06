@@ -24,6 +24,8 @@ public:
     int getG();
     int getB();
     
+    void setY(int a);
+    
     void setColor() noexcept;
     
     std::tuple<int,int,int> getColor();

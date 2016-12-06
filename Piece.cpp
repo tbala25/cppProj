@@ -62,3 +62,7 @@ int Piece::getB() {
 tuple<int,int,int> Piece::getColor() {
     return Piece::color_;
 }
+
+void Piece::setY(int a) {
+    Piece::y_ = a;
+}

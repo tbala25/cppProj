@@ -25,18 +25,18 @@ void GameState::catchXYfromClick(int x, int y){
     int pieceIndex = whichPieceWasClicked(x, y);
     // If there is an active tile
     if(this->firstTile_ >= 0){
-        std::cout << "fol 1 " << this->firstTile_ << " " << this->secondTile_ << std::endl;
+       // std::cout << "fol 1 " << this->firstTile_ << " " << this->secondTile_ << std::endl;
         //If the second tile exists already
         if(this->secondTile_ >= 0){
             // Then this piece is a new piece to swap
             this->firstTile_ = pieceIndex;
             this->secondTile_ = -1;
-            std::cout << "fol 2 " << this->firstTile_ << " " << this->secondTile_ << std::endl;
+           // std::cout << "fol 2 " << this->firstTile_ << " " << this->secondTile_ << std::endl;
         }
         else{
             //This choice is the second in a swap
             this->secondTile_ = pieceIndex;
-            std::cout << "fol 3 " << this->firstTile_ << " " << this->secondTile_ << std::endl;
+          //  std::cout << "fol 3 " << this->firstTile_ << " " << this->secondTile_ << std::endl;
             // DO the swap here
             swapCaller();
         }
@@ -66,14 +66,14 @@ void GameState::addPiece(Piece piece){
  */
 int GameState::whichPieceWasClicked(int x, int y){
     int returnVal = -1;
-    std::cout << "WPWC BP? : VS: " << (this->gameBoard_).size() << std::endl;
+    //std::cout << "WPWC BP? : VS: " << (this->gameBoard_).size() << std::endl;
     for(int i = 0; i < (this->gameBoard_).size(); i++){
         if(wasThisPieceClicked(x,y,
                                this->gameBoard_[i].getX(),
                                this->gameBoard_[i].getY())){
             //std::cout << "Clicke:: x= " << x << " y=" << y << "p-x" << this->gameBoard_[i].getX() << "p-y" <<this->gameBoard_[i].getY() << std::endl;
             returnVal = i;
-            std::cout << "A Piece Was Clicke at index : " << i << std::endl;
+            std::cout << "A Piece Was Clicked at index : " << i << std::endl;
             break;
         }
     }
@@ -120,7 +120,7 @@ void GameState::swapCaller(){
 }
 
 /**
- *  Scans the board for sets of 3
+ *  Scans the board for sets of 2
  *
  */
 void GameState::scanForMatches(){
@@ -128,90 +128,6 @@ void GameState::scanForMatches(){
     //scanForHoriMatches();
     scanForMatches2();
     deleteMatchedPieces();
-}
-
-/**
- *  Scans the board for Vertical sets of 3
- *
- */
-void  GameState::scanForVertMatches(){
-    int compTileIdx = 7;
-    int firstRange = -1;
-    int lastRange = -1;
-    
-    // Scan each column
-    for(int i = 0; i < 8; i++){
-        std::cout << i << " i" << std::endl;
-        //set the column index
-        compTileIdx = (i * 8);
-        
-        // Scan for column matches
-        for(int j = 7; j > 1; j--){
-            std::cout << j << " j" << std::endl;
-            
-            // Loop through the pieces above the start piece
-            for(int k = 6; k > -1; k--){
-                std::cout << k << " k" << std::endl;
-                
-                // If adjacent match not found
-                if(!this->doPiecesMatch(j + compTileIdx, k + compTileIdx)){
-                    //std::cout << k << " match not found" << std::endl;
-                    // Set the last in the range to the last checked piece
-                    lastRange = k + compTileIdx + 1;
-                    
-                    // if (first item checked - last item checked) > 2 -> seq 3
-                    if((j + compTileIdx - lastRange) > 2){
-                        
-                        // Mark all in range for delete
-                        for(int l = lastRange; l >= (j + compTileIdx); l++){
-                            this->matchedPieces_.insert(l);
-                            std::cout << " match found" << std::endl;
-                        }
-                    }
-                    // kill k loop
-                    k = -1;
-                }
-            }
-        }
-    }
-}
-
-
-/**
- *  Scans the board for Horizontal sets of 3
- *
- */
-void  GameState::scanForHoriMatches(){
-    int firstRange = -1;
-    int lastRange = -1;
-    
-    //Loop through each row
-    for(int i = 0; i < 6; i++){
-        // i == the first index to compare
-        // loop through the rest of the row
-        for(int j = 0; j < 64; j += 8){
-            //loop through the rest of the row
-            for(int k = 8 + i; k <= (40 + i); i += 8){
-                // If adjacent match not found
-                if(!this->doPiecesMatch(j, k)){
-                    // Set the last in the range to the last checked piece
-                    lastRange = k - 8;
-                    // if (first item checked - last item checked) > 2 -> seq 3
-                    if((j - lastRange) > (2 * 8)){
-                        // Mark all in range for delete
-                        for(int l = lastRange; l >= j; l++){
-                            std::cout << " match found hori" << std::endl;
-                            this->matchedPieces_.insert(l);
-                        }
-                    }
-                    // Reset j to not recheck the pieces marked for delete
-                    //j = k;
-                    // kill k loop
-                    k = 99;
-                }
-            }
-        }
-    }
 }
 
 void GameState::scanForMatches2() {
@@ -226,6 +142,8 @@ void GameState::scanForMatches2() {
             //std::cout << "same col" + std::to_string(firstCol) << std::endl;
             if(doPiecesMatch(x, y)) {
                 std::cout << " match found vert" + std::to_string(x) + "," + std::to_string(y) << std::endl;
+                matchedPieces_.insert(x);
+                matchedPieces_.insert(y);
             }
         }
     }
@@ -235,27 +153,22 @@ void GameState::scanForMatches2() {
         int y = x+8;
         if(doPiecesMatch(x, y)) {
             std::cout << " match found horiz" + std::to_string(x) + "," + std::to_string(y) << std::endl;
+            matchedPieces_.insert(x);
+            matchedPieces_.insert(y);
         }
         
     }
 }
 
 /**
- *  deletes matched pieces from the game board
- *  [Does not actually delete them, rather resets
- *   the color to a new color]
+ *  deletes matched pieces from the game board via the fall method
+ *
  */
 void  GameState::deleteMatchedPieces(){
     
     // Iterate the set of pieces to "delete"
     for(auto f : this->matchedPieces_) {
-        // use f here
-        
         GameState::fall(f);
-        
-        
-        
-        this->gameBoard_[f].setColor();
     }
     
     // Clear the matched pieces set as they have been 'deleted'
@@ -264,19 +177,23 @@ void  GameState::deleteMatchedPieces(){
 
 void GameState::fall(int f) {
     int col = f/8; //top piece of col index
+    int beneathY;
     
-    for(int x = f; x > col; x--) {
-        //slide all pieces down
-        //get x, y loc from top
-        Piece* bottom;
-        Piece* slidingDown;
+    //starts at top of col and iterates down until(not including) piece that is to be deleted
+    for(int x = col; x < f; x++) {
+        //X is to be deleted, x+1 takes x's Yloc and index in board
+    
+        //the Y coord of the piece below the current piece
+        beneathY  = GameState::gameBoard_.at(x+1).getY();
         
+        //set new Y coord
+        GameState::gameBoard_.at(x).setY(beneathY);
+        //set new index in board
+        GameState::gameBoard_.at(x+1) = GameState::gameBoard_.at(x);
         
-        GameState::gameBoard_.at(x) = GameState::gameBoard_.at(x-1);
     }
     //add piece to top
     GameState::gameBoard_.at(col) = GameState::newPiece(60*col, 50);
-
 }
 
 Piece GameState::newPiece(int x, int y) {
