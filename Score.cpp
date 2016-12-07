@@ -11,7 +11,7 @@ Score::~Score()
     //dtor
 }
 
-void Score::increaseScore(int x) noexcept
+void Score::increaseScore(const int& x) noexcept
 {
     curScore += x;
     regenScore();
@@ -24,8 +24,8 @@ int Score::getScore() noexcept
 
 void Score::Draw(SDL_Renderer* r)
 {
-    SDL_Texture* message  = SDL_CreateTextureFromSurface(r, Score::sMessage);
-    SDL_Rect messageRect;
+    SDL_Texture* message  = SDL_CreateTextureFromSurface(r, Score::sMessage); //sets message
+    SDL_Rect messageRect; //create rect to draw
     messageRect.x = 10;
     messageRect.y = 10;
     messageRect.w = 100;
@@ -36,8 +36,8 @@ void Score::Draw(SDL_Renderer* r)
 
 void Score::regenScore()
 {
-    if(curScore != prevScore) {
-	std::string scoreStr =  "Score: " + std::to_string(curScore);
-    	Score::sMessage = TTF_RenderText_Solid(Score::Sans, scoreStr.c_str(), Score::White);
+    if(curScore != prevScore) { //if scores differ
+	std::string scoreStr =  "Score: " + std::to_string(curScore); //print score
+    	Score::sMessage = TTF_RenderText_Solid(Score::Sans, scoreStr.c_str(), Score::White); //render
     }
 }

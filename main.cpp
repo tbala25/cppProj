@@ -6,13 +6,14 @@
 #include <chrono>         // std::chrono::seconds
 #include "Piece.h"
 #include "GameState.h"
+using namespace std;
 
 SDL_Renderer* renderer;
+
 // Create a Game State
 GameState gameState;
 
-using namespace std;
-
+//method to make rect
 SDL_Rect makeNewRect(int x, int y, int w, int h){
     SDL_Rect a;
     a.x = x;
@@ -22,10 +23,10 @@ SDL_Rect makeNewRect(int x, int y, int w, int h){
     return a;
 };
 
+//method to draw board
 void makePieces()
 {
     // Generate the game board UI
-    
     int hXw = 50;
   
     // Vector of SDL Rectangles
@@ -48,11 +49,10 @@ void makePieces()
 
 int main (int argc, char** argv)
 {
-    //int SDL_Init(SDL_INIT_EVERYTHING);
     SDL_Window* window = NULL;
     window = SDL_CreateWindow
     (
-     "CPP BEEJeWeLeD - Shapez", SDL_WINDOWPOS_UNDEFINED,
+     "CPP BEEJeWeLeD", SDL_WINDOWPOS_UNDEFINED,
      SDL_WINDOWPOS_UNDEFINED,
      800,
      600,
@@ -66,14 +66,13 @@ int main (int argc, char** argv)
     // Set render color to red ( background will be rendered in this color )
     SDL_SetRenderDrawColor( renderer, 0, 0, 0, 0 );
     
-    // Clear winow
+    // Clear window
     SDL_RenderClear( renderer );
     
     makePieces();
     
     // Render the rects to the screen
     SDL_RenderPresent(renderer);
-    
     
     // Wait for 5 sec
     SDL_Delay( 1000 );

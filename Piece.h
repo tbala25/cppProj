@@ -1,35 +1,58 @@
-//
-//  Piece.hpp
-//  cppGame
-//
-//  Created by Nicholas Scheuring on 12/5/16.
-//  Copyright © 2016 Nick Scheuring. All rights reserved.
-//
-
 #ifndef Piece_h
 #define Piece_h
 
 #include <stdio.h>
 #include <SDL2/SDL.h>
-
 #include <tuple>
+
 class Piece {
+    
+/*
+ * Piece object represents rect in board. It is a rect and they differ by color
+ * has x,y coord
+ * has a tuple to represent rgb values for color
+ */
 public:
     
+    /**
+     * Public constructor
+     * @params the x and y coordinate of the rect
+     */
     Piece(const int& x, const int&y);
     
-    int getX();
-    int getY();
-    int getR();
-    int getG();
-    int getB();
-    
-    void setY(int a);
-    void setX(int a);
-    
+    /*
+     *@returns the x coord of piece
+     */
+    int getX() const noexcept;
+    /*
+     *@returns the y coord of piece
+     */
+    int getY() const noexcept;
+    /*
+     *@returns the red value of color
+     */
+    int getR() const noexcept;
+    /*
+     *@returns the green value of color
+     */
+    int getG() const noexcept;
+    /*
+     *@returns the blue value of color
+     */
+    int getB() const noexcept;
+    /* Sets y coordinate
+     *@param the y coord
+     */
+    void setY(/*given y coord*/const int& a) noexcept;
+    /* Sets x coordinate
+     *@param the x coord
+     */
+    void setX(/*given y coord*/const int& a) noexcept;
+    /*
+     * Sets the tuple<int,int,int> for color via a random number generator
+     */
     void setColor() noexcept;
-    
-    std::tuple<int,int,int> getColor();
+
     
     
 private:

@@ -1,10 +1,3 @@
-//
-//  Piece.cpp
-//  cppGame
-//
-//  Created by Nicholas Scheuring on 12/5/16.
-//  Copyright © 2016 Nick Scheuring. All rights reserved.
-//
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include <ctime>
@@ -20,8 +13,8 @@ Piece::Piece(const int& ex, const int& why) {
 }
 
 void Piece::setColor() noexcept{
-    //srand(time(NULL));
-    int randNum = rand() % 8 + 1;
+    int randNum = rand() % 8 + 1; //generate random number
+    //set cases for "random" colors
     if(randNum == 1) {
         Piece::color_ = make_tuple(255,0,0);
     }
@@ -48,33 +41,30 @@ void Piece::setColor() noexcept{
     }
 }
 
-int Piece::getX() {
+int Piece::getX() const noexcept {
     return Piece::x_;
 }
 
-int Piece::getY() {
+int Piece::getY() const noexcept{
     return Piece::y_;
 }
 
-int Piece::getR() {
+int Piece::getR() const noexcept{
     return get<0>(this->color_);
 }
 
-int Piece::getG() {
+int Piece::getG() const noexcept{
     return get<1>(this->color_);
 }
 
-int Piece::getB() {
+int Piece::getB() const noexcept{
     return get<2>(this->color_);
 }
 
-tuple<int,int,int> Piece::getColor() {
-    return Piece::color_;
-}
-
-void Piece::setY(int a) {
+void Piece::setY(const int& a) noexcept {
     Piece::y_ = a;
 }
-void Piece::setX(int a) {
+
+void Piece::setX(const int& a) noexcept {
     Piece::x_ = a;
 }

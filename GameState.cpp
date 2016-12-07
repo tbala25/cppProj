@@ -11,18 +11,17 @@
 
 GameState::GameState(){
     std::cout << "Game State Constructor" << std::endl;
-    init();
+    init(); //fills game board
     this->firstTile_ = -1;
     this->secondTile_ = -1;
 }
-
 
 /**
  * Collects the mouse cursor location
  * @param x the mouse's x position
  * @param y the mouse's y position
  */
-void GameState::catchXYfromClick(int x, int y){
+void GameState::catchXYfromClick(int x, int y) noexcept{
     GameState::scanForMatches();
     int pieceIndex = whichPieceWasClicked(x, y);
    
@@ -56,7 +55,7 @@ void GameState::catchXYfromClick(int x, int y){
  * Adds a piece to the game state
  * @param piece the piece
  */
-void GameState::addPiece(Piece piece){
+void GameState::addPiece(Piece piece) noexcept{
     this->gameBoard_.push_back(piece);
 }
 
@@ -67,7 +66,7 @@ void GameState::addPiece(Piece piece){
  * @param y the mouse's y position
  * @return the index of the piece that was clicked
  */
-int GameState::whichPieceWasClicked(int x, int y){
+int GameState::whichPieceWasClicked(int x, int y) const noexcept{
     int returnVal = -1;
     //std::cout << "WPWC BP? : VS: " << (this->gameBoard_).size() << std::endl;
     for(int i = 0; i < (this->gameBoard_).size(); i++){
@@ -89,7 +88,7 @@ int GameState::whichPieceWasClicked(int x, int y){
  * @param y the mouse's y position
  * @return true if on piece, false else
  */
-bool GameState::wasThisPieceClicked(int x, int y, int x_piece, int y_piece){
+bool GameState::wasThisPieceClicked(int x, int y, int x_piece, int y_piece) const noexcept{
     return (x >= x_piece && x < x_piece + 50 && y_piece <= y && y_piece > y - 50);
 }
 
@@ -98,7 +97,7 @@ bool GameState::wasThisPieceClicked(int x, int y, int x_piece, int y_piece){
  * Swap the two pieces
  *
  */
-void GameState::swapPieces(){
+void GameState::swapPieces() noexcept{
     Piece temp = this->gameBoard_[this->secondTile_];
     this->gameBoard_[this->secondTile_] = this->gameBoard_[this->firstTile_];
     this->gameBoard_[this->firstTile_] = temp;
@@ -109,7 +108,7 @@ void GameState::swapPieces(){
  * Calls the Swap function
  *
  */
-void GameState::swapCaller(){
+void GameState::swapCaller() noexcept{
     swapPieces();
     //scanForVertMatches();
     //scanForHoriMatches();
@@ -126,14 +125,13 @@ void GameState::swapCaller(){
  *  Scans the board for sets of 2
  *
  */
-void GameState::scanForMatches(){
-    //scanForVertMatches();
-    //scanForHoriMatches();
+void GameState::scanForMatches() noexcept{
+
     scanForMatches2();
     deleteMatchedPieces();
 }
 
-void GameState::scanForMatches2() {
+void GameState::scanForMatches2() noexcept{
     //vert
     int firstCol;
     int secCol;
@@ -167,7 +165,7 @@ void GameState::scanForMatches2() {
  *  deletes matched pieces from the game board via the fall method
  *
  */
-void  GameState::deleteMatchedPieces(){
+void GameState::deleteMatchedPieces() noexcept{
     
     // Iterate the set of pieces to "delete"
     for(auto f : this->matchedPieces_) {
@@ -179,28 +177,12 @@ void  GameState::deleteMatchedPieces(){
     this->matchedPieces_.clear();
 }
 
-//void GameState::fall(int f) {
-//    int col = f/8; //top piece of col index
-//   // int beneathY;
-//
-//    for(int y = f; y > col; y--) {
-//        GameState::gameBoard_.at(y-1).setY(GameState::gameBoard_.at(y).getY());
-//        GameState::gameBoard_.at(y) = GameState::gameBoard_.at(y-1);
-//    }
-//    //add piece to top
-//    GameState::gameBoard_.at(col) = GameState::newPiece((60*col)+350, 50);
-//}
-//
-//Piece GameState::newPiece(int x, int y) {
-//    return Piece(x,y);
-//}
-
 
 /**
  * Checks if two pieces color matches
  * @return true if match, false else
  */
-bool GameState::doPiecesMatch(int p1, int p2){
+bool GameState::doPiecesMatch(int p1, int p2) const noexcept{
     bool rMatch = this->gameBoard_.at(p1).getR() == this->gameBoard_.at(p2).getR();
     bool gMatch = this->gameBoard_.at(p1).getG() == this->gameBoard_.at(p2).getG();
     bool bMatch = this->gameBoard_.at(p1).getB() == this->gameBoard_.at(p2).getB();
@@ -208,7 +190,7 @@ bool GameState::doPiecesMatch(int p1, int p2){
     //return this->gameBoard_.at(p1).getColor() == this->gameBoard_.at(p2).getColor();
 }
 
-void GameState::init() {
+void GameState::init() noexcept {
     int x = 350;
     int y = 50;
     for(int i = 0; i < 8; i++) {
@@ -221,6 +203,6 @@ void GameState::init() {
     }
 }
 
-std::vector<Piece> GameState::getPieces() {
+std::vector<Piece> GameState::getPieces() const noexcept {
     return GameState::gameBoard_;
 }
