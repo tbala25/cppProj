@@ -171,36 +171,29 @@ void  GameState::deleteMatchedPieces(){
     
     // Iterate the set of pieces to "delete"
     for(auto f : this->matchedPieces_) {
-        GameState::fall(f);
+        //GameState::fall(f);
+        GameState::gameBoard_.at(f).setColor();
     }
     
     // Clear the matched pieces set as they have been 'deleted'
     this->matchedPieces_.clear();
 }
 
-void GameState::fall(int f) {
-    int col = f/8; //top piece of col index
-    int beneathY;
-    
-    //starts at top of col and iterates down until(not including) piece that is to be deleted
-    for(int x = col; x < f; x++) {
-    
-        //the Y coord of the piece below the current piece
-        beneathY  = GameState::gameBoard_.at(x+1).getY();
-        
-        //set new Y coord
-        GameState::gameBoard_.at(x).setY(beneathY);
-        //set new index in board
-        GameState::gameBoard_.at(x+1) = GameState::gameBoard_.at(x);
-        
-    }
-    //add piece to top
-    GameState::gameBoard_.at(col) = GameState::newPiece((60*col)+350, 50);
-}
-
-Piece GameState::newPiece(int x, int y) {
-    return Piece(x,y);
-}
+//void GameState::fall(int f) {
+//    int col = f/8; //top piece of col index
+//   // int beneathY;
+//
+//    for(int y = f; y > col; y--) {
+//        GameState::gameBoard_.at(y-1).setY(GameState::gameBoard_.at(y).getY());
+//        GameState::gameBoard_.at(y) = GameState::gameBoard_.at(y-1);
+//    }
+//    //add piece to top
+//    GameState::gameBoard_.at(col) = GameState::newPiece((60*col)+350, 50);
+//}
+//
+//Piece GameState::newPiece(int x, int y) {
+//    return Piece(x,y);
+//}
 
 
 /**
