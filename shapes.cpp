@@ -64,7 +64,7 @@ int main (int argc, char** argv)
     // Vector of SDL Rectangles
     vector<SDL_Rect> rekts;
     // Vector of Game Pieces
-    vector<Piece> pieces = gameState.getPieces();
+    vector<Piece> pieces ;//= gameState.getPieces();
     
     // Loops and populates the vectors of Rectangles, and Pieces
     for(int i = 0; i < 8; i++){
@@ -130,7 +130,7 @@ int main (int argc, char** argv)
                 }
                 
             }
-            redraw();
+            
         }
         
         

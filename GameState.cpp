@@ -11,7 +11,7 @@
 
 GameState::GameState(){
     std::cout << "Game State Constructor" << std::endl;
-    init();
+    //init();
     this->firstTile_ = -1;
     this->secondTile_ = -1;
 }
@@ -24,6 +24,7 @@ GameState::GameState(){
  */
 void GameState::catchXYfromClick(int x, int y){
     int pieceIndex = whichPieceWasClicked(x, y);
+   
     // If there is an active tile
     if(this->firstTile_ >= 0){
        // std::cout << "fol 1 " << this->firstTile_ << " " << this->secondTile_ << std::endl;
