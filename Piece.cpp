@@ -21,7 +21,7 @@ Piece::Piece(const int& ex, const int& why) {
 
 void Piece::setColor() noexcept{
     //srand(time(NULL));
-    int randNum = rand() % 5 + 1;
+    int randNum = rand() % 8 + 1;
     if(randNum == 1) {
         Piece::color_ = make_tuple(255,0,0);
     }
@@ -36,6 +36,15 @@ void Piece::setColor() noexcept{
     }
     else if(randNum == 5) {
         Piece::color_ = make_tuple(0,255,255);
+    }
+    else if(randNum == 6) {
+        Piece::color_ = make_tuple(150,100,0);
+    }
+    else if(randNum == 7) {
+        Piece::color_ = make_tuple(0,100,255);
+    }
+    else if(randNum == 8) {
+        Piece::color_ = make_tuple(100,0,150);
     }
 }
 

@@ -11,7 +11,7 @@
 
 GameState::GameState(){
     std::cout << "Game State Constructor" << std::endl;
-    //init();
+    init();
     this->firstTile_ = -1;
     this->secondTile_ = -1;
 }
@@ -23,6 +23,7 @@ GameState::GameState(){
  * @param y the mouse's y position
  */
 void GameState::catchXYfromClick(int x, int y){
+    GameState::scanForMatches();
     int pieceIndex = whichPieceWasClicked(x, y);
    
     // If there is an active tile
@@ -183,7 +184,6 @@ void GameState::fall(int f) {
     
     //starts at top of col and iterates down until(not including) piece that is to be deleted
     for(int x = col; x < f; x++) {
-        //X is to be deleted, x+1 takes x's Yloc and index in board
     
         //the Y coord of the piece below the current piece
         beneathY  = GameState::gameBoard_.at(x+1).getY();
@@ -195,7 +195,7 @@ void GameState::fall(int f) {
         
     }
     //add piece to top
-    GameState::gameBoard_.at(col) = GameState::newPiece(60*col, 50);
+    GameState::gameBoard_.at(col) = GameState::newPiece((60*col)+350, 50);
 }
 
 Piece GameState::newPiece(int x, int y) {
@@ -216,10 +216,15 @@ bool GameState::doPiecesMatch(int p1, int p2){
 }
 
 void GameState::init() {
-    for(int x = 0; x < 8; x++) {
-        for(int y = 0; y < 8; y ++) {
+    int x = 350;
+    int y = 50;
+    for(int i = 0; i < 8; i++) {
+        for(int j = 0; j < 8; j ++) {
             GameState::gameBoard_.push_back(Piece(x,y));
+            y +=60;
         }
+        x+= 60;
+        y = 50;
     }
 }
 
